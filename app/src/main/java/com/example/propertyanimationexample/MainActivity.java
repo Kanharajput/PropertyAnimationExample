@@ -5,20 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.PathInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button button;
+    private ImageView circle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.button);    // reference of the button
+        button = findViewById(R.id.moving_button);    // reference of the button
+        circle = findViewById(R.id.circle_image);
     }
 
     public void movingButton(View view) {
@@ -44,5 +49,16 @@ public class MainActivity extends AppCompatActivity {
         /*ObjectAnimator animation = ObjectAnimator.ofFloat(button, "translationX", 520f);
         animation.setDuration(500);
         animation.start();*/
+    }
+
+    public void ArcMotion(View view) {
+
+        Path path = new Path();
+        path.arcTo(0f,0f,1000f,1000f,270f,-180f,true);    // creating new path as we want it to move like this
+
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.X, View.Y, path);
+        animator.setDuration(2000);
+        animator.start();
+
     }
 }
